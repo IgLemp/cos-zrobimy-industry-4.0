@@ -39,10 +39,33 @@ def orders_page():
 
 @app.route('/orders')
 def orders():
-    return ''
+    amount = len(orders_data)
+    
+    head = f"""<h2>Current number of orders: {amount}</h2>"""
+    
+    st = ""
+    for order in orders_data:
+        st = st + f"""
+            <tr>
+                <td>{order['ID']}</td>
+                <td>{len(order['Data'])}</td>
+            </tr>
+            """
+    
+    return f"""
+        {head}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>items amount</th>
+            </tr>
+            {st}
+        </table>
+        """
 
 @app.route('/order')
 def order():
+    request.args.get()
     return ''
 
 
