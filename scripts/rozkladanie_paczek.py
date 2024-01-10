@@ -25,8 +25,8 @@ with open(csv_file, 'r') as file:
         }
         products_data.append(product_info)
 
-# Sortowanie listy produktów według wagi malejąco
-products_data = sorted(products_data, key=lambda x: x['Waga (kg)'], reverse=True)
+# Sortowanie listy produktów według wagi malejąco, a następnie wymiarów malejąco
+products_data = sorted(products_data, key=lambda x: (x['Waga (kg)'], x['Wymiary (mm)']), reverse=True)
 
 # Wymiary palety
 palette_dimensions = {'Szerokość': 800, 'Długość': 1200, 'Wysokość': 1856}
@@ -44,6 +44,10 @@ def add_package_to_palette(product_info):
     dimensions_str = product_info['Wymiary (mm)']
     dimensions = [int(dim) for dim in dimensions_str.split('x')]
     package_dimensions = dimensions
+
+    # Sprawdzenie czy paczka ma takie same wymiary jak poprzednie paczki na palecie
+    if dimensions_list[-1] and dimensions_list[-1][0] != dimensions_str:
+        return False
 
     # Sprawdzenie czy paczka zmieści się na aktualnej palecie
     if current_palette['Wysokość'] + package_dimensions[2] <= palette_dimensions['Wysokość']:
