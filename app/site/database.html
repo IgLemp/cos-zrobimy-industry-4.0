@@ -9,6 +9,11 @@
 </head>
 <body>
     <h1>Database</h1>
-    <div hx-get="/" hx-swap="innerHTML">database data</div>
+    <input type="number" name="Product ID"   id="pID">
+    <input type="text"   name="Product Name" id="pName">
+    <input type="number" name="Product Weight" id="pWeight">
+    <input type="text"   name="Product Size"   id="pSize" pattern="([0-9]*)x([0-9]*)x([0-9]*)">
+    <button hx-get="/database/get_entries" hx-swap="innerHTML" hx-target="next">database data</button>
+    <div style="padding-top: 5%;"></div>
 </body>
 </html>
