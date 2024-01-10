@@ -29,6 +29,6 @@ def load_database() -> list:
             products_data.append(product_info)
 
     # Sortowanie listy produktów według wagi (malejąco)
-    # products_data = sorted(products_data, key=lambda x: x['Waga (kg)'], reverse=True)
+    products_data = sorted(products_data, key=lambda x: x['Weight'], reverse=True)
     return products_data
 
