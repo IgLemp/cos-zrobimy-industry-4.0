@@ -13,7 +13,12 @@
         <nav hx-get="/components/menu.html" hx-trigger="load"></nav>
     </header>
     <section>
-        <div hx-get="/orders" hx-trigger="load"></div>
+        <h2>Order ID: {id}</h2>
+        <div hx-get="/order?id={id}" hx-trigger="load"></div>
+        <div style="padding-top: 8%;"></div>
+        <h2>Order route:</h2>
+        <h3>Nie ma</h3>
+        <img src="/data/kekw.png" alt="non existent">
     </section>
 </body>
 </html>

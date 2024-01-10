@@ -1,4 +1,4 @@
-from flask import Flask, redirect, Response, request
+from flask import Flask, redirect, Response, request, send_file
 from helpers import load_site, load_database, load_orders
 
 app = Flask(__name__)
@@ -36,19 +36,34 @@ def database_page():
 def orders_page():
     return load_site('./site/orders.html')
 
+@app.route('/order.html')
+def order_page():
+    id = request.args.get('id', default=1, type=int)
+    return load_site('./site/order.html').replace('{id}', str(id))
+
+@app.route('/components/menu.html')
+def menu_component():
+    return load_site('./components/menu.html')
+
+@app.route('/data/kekw.png')
+def kekw():
+    return send_file('./data/kekw.png')
+
 
 @app.route('/orders')
 def orders():
-    amount = len(orders_data)
+    orders_list = sorted(orders_data, key=lambda x: x['ID'], reverse=False)
+    amount = len(orders_list)
     
     head = f"""<h2>Current number of orders: {amount}</h2>"""
     
     st = ""
-    for order in orders_data:
+    for order in orders_list:
         st = st + f"""
             <tr>
                 <td>{order['ID']}</td>
                 <td>{len(order['Data'])}</td>
+                <td id="orderButton"><a href="/order.html?id={order['ID']}">Show order</a></td>
             </tr>
             """
     
@@ -57,7 +72,8 @@ def orders():
         <table>
             <tr>
                 <th>ID</th>
-                <th>items amount</th>
+                <th>Items amount</th>
+                <th>button</th>
             </tr>
             {st}
         </table>
@@ -65,18 +81,41 @@ def orders():
 
 @app.route('/order')
 def order():
-    request.args.get()
-    return ''
+    id = request.args.get('id', default=1, type=int)
+    order = ([ord for ord in orders_data if ord['ID'] == str(id)])[0]['Data']
+    
+    table = ""
+    for prod in order:
+        table = table + f"""
+            <tr>
+                <td>{prod['ID']}</td>
+                <td>{prod['Name']}</td>
+                <td>{prod['Location']}</td>
+                <td>{prod['Amount']}</td>
+            </tr>
+            """
+    
+    return f"""
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Amount</th>
+            </tr>
+            {table}
+        </table>
+        """
 
 
 @app.route('/database/get_entries')
 def database():
     order_by = request.args.get('order', default='ID', type=str)
     selected = request.args.get('count', default=20, type=int)
-    ascending = request.args.get('ascending', default=True, type=bool)
-    print("order_by:", order_by)
-    print("selected:", selected)
-    print("ascending:", ascending)
+    ascending = request.args.get('ascending', default=False, type=bool)
+    # print("order_by:", order_by)
+    # print("selected:", selected)
+    # print("ascending:", ascending)
     
     order_by = order_by if order_by in ['ID', 'Name', 'Weight', 'Dimensions'] else 'ID'
     if selected < 0: selected = 0
@@ -105,3 +144,6 @@ def database():
                 {res}
             </table>
             """
+        
+
+app.run(host='192.168.1.18')
