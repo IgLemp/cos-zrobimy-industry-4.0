@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, Response
 from helpers import load_site, load_database
 
 app = Flask(__name__)
@@ -13,11 +13,11 @@ def root():
 
 @app.route('/index.html')
 def index():
-    return load_site("./site/index.html")
+    return load_site('./site/index.html')
 
 @app.route('/style.css')
 def style():
-    return load_site("./site/style.css")
+    return Response(load_site('./site/style.css'), mimetype='text/css')
     
 @app.route('/undefined')
 def undefined():
@@ -26,15 +26,15 @@ def undefined():
 
 @app.route('/package_route.html')
 def package_route_page():
-    return load_site("./site/package_route.html")
+    return load_site('./site/package_route.html')
 
 @app.route('/package_layout.html')
 def package_layout_page():
-    return load_site("./site/package_layout.html")
+    return load_site('./site/package_layout.html')
 
 @app.route('/database.html')
 def database_page():
-    return load_site("./site/database.html")
+    return load_site('./site/database.html')
 
 
 @app.route('/database/get_entries', defaults={'number': 50})
