@@ -39,7 +39,7 @@ def load_orders():
     files = [f for f in os.listdir(os.path.join('data', 'orders'))]
     for fname in files:
         with open(os.path.join('data', 'orders', fname), 'r') as file:
-            id = re.sub('\D', '', fname)
+            fid = re.sub('\D', '', fname)
             file_data = []
             
             reader = csv.DictReader(file)
@@ -52,6 +52,9 @@ def load_orders():
                 }
                 file_data.append(order_data)
             
-            data.append(file_data)
+            data.append({'ID': fid ,'Data': file_data})
     
     return data
+
+if __name__ == '__main__':
+    print(load_orders()[0])

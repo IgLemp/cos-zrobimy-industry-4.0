@@ -1,8 +1,9 @@
 body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: larger;
     padding: 5%;
 }
 
-h1 {
-
+tr:hover {
+    background-color: powderblue;
 }

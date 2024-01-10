@@ -9,10 +9,6 @@
 </head>
 <body>
     <h1>Database</h1>
-    <!-- <input type="number" name="Product ID"     oninput="changeId()" id="pID">
-    <input type="text"   name="Product Name"   oninput="changeName()" id="pName">
-    <input type="number" name="Product Weight" oninput="changeWeigt()" id="pWeight">
-    <input type="text"   name="Product Size"   oninput="changeSize()" id="pSize" pattern="([0-9]*)x([0-9]*)x([0-9]*)"> -->
     <input type="number" name="Number of entries" oninput="changeSelected()", id="pSel">
     <select name="Sort by" oninput="changeSort()" id="pTyp">
         <option value="ID">ID</option>
@@ -24,39 +20,41 @@
         <option value="True">ascending</option>
         <option value="False">descending</option>
     </select>
-    <button hx-get="/database/get_entries" hx-swap="innerHTML" hx-target="next" id="requestButton">Search</button>
-    <div style="padding-top: 5%;"></div>
+    <button hx-get="/database/get_entries" hx-swap="innerHTML" hx-target="#tableDiv" hx-vals="js:{'order': sort_by, 'count': count, 'ascending': order}" id="requestButton">Search</button>
+    <div style="padding-top: 5%;", id="tableDiv">
+        <div hx-get="/database/get_entries" hx-trigger="load">
+    </div>
 </body>
 <script>
     var order = "False"
     var sort_by = "ID";
     var count = 20;
 
-    var reqbutt = document.getElementById("requestButton");
-    reqbutt.setAttribute("hx-get", `/database/get_entries?order=${sort_by}&count=${count}&ascending=${order}`)
+    // var reqbutt = document.getElementById("requestButton");
+    // reqbutt.setAttribute("hx-get", `/database/get_entries?order=${sort_by}&count=${count}&ascending=${order}`)
 
     const changeSelected = () => {
         var v = document.getElementById("pSel").value;
         count = parseInt(v);
-        updateURI();
+        // updateURI();
     }
     
     const changeSort = () => {
         var v = document.getElementById("pTyp").value;
         sort_by = v;
-        updateURI();
+        // updateURI();
     }
     
     const changeOrder = () => {
         var v = document.getElementById("pOrd").value;
         order = v;
-        updateURI();
+        // updateURI();
     }
 
-    const updateURI = () => {
-        reqbutt.setAttribute("hx-get", `/database/get_entries?order=${sort_by}&count=${count}&ascending=${order}`)
-        htm
-    }
+    // const updateURI = () => {
+    //     reqbutt.setAttribute("hx-get", `/database/get_entries?order=${sort_by}&count=${count}&ascending=${order}`)
+    //     htmx.process("requestButton");
+    // }
 
 </script>
 </html>
