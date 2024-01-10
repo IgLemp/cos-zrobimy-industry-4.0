@@ -1,4 +1,4 @@
-from flask import Flask, redirect, Response
+from flask import Flask, redirect, Response, request
 from helpers import load_site, load_database
 
 app = Flask(__name__)
@@ -18,11 +18,6 @@ def index():
 @app.route('/style.css')
 def style():
     return Response(load_site('./site/style.css'), mimetype='text/css')
-    
-@app.route('/undefined')
-def undefined():
-    return 'Fuck off!'
-        
 
 @app.route('/package_route.html')
 def package_route_page():
@@ -36,20 +31,36 @@ def package_layout_page():
 def database_page():
     return load_site('./site/database.html')
 
+@app.route('/orders.html')
+def orders_page():
+    return load_site('./site/orders.html')
 
-@app.route('/database/get_entries', defaults={'number': 50})
-@app.route('/database/get_entries/<int:number>')
-def database(number: int):
-    # loads 50 first entries
+
+@app.route('/orders')
+
+
+@app.route('/database/get_entries')
+def database():
+    order_by = request.args.get('order', default='ID', type=str)
+    selected = request.args.get('count', default=20, type=int)
+    ascending = request.args.get('ascending', default=True, type=bool)
+    print("order_by:", order_by)
+    print("selected:", selected)
+    print("ascending:", ascending)
+    
+    order_by = order_by if order_by in ['ID', 'Name', 'Weight', 'Dimensions'] else 'ID'
+    if selected < 0: selected = 0
+    if selected > len(database_data): selected = len(database_data)
+    
     res = ""
-    products_data = sorted(database_data, key=lambda x: x['ID'], reverse=False)
-    for i in range(0, min(number, len(products_data))):
+    products_data = sorted(database_data, key=lambda x: x[order_by], reverse=ascending)
+    for i in range(0, min(selected, len(products_data))):
         res = res + f"""
             <tr>
                 <td>{products_data[i]['ID']}</td>
                 <td>{products_data[i]['Name']}</td>
                 <td>{products_data[i]['Weight']}</td>
-                <td>{'x'.join(products_data[i]['Dimensions'])})</td>
+                <td>{'x'.join(products_data[i]['Dimensions'])}</td>
             </tr>
             """
     
