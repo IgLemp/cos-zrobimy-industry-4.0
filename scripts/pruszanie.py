@@ -12,7 +12,7 @@ def gdzie_idziesz(polorzenie_koncowe, polorzenie_pocznotkowe):
         polorzenie_pocznotkowe=prubna_list[1]
 
         if(polorzenie_pocznotkowe[3]>=polorzenie_koncowe[3]):
-            if(int(polorzenie_koncowe[5])*10+int(polorzenie_koncowe[6])<=8):
+            if(int(polorzenie_koncowe[5])*10+int(polorzenie_koncowe[6])>=8):
                 polorzenie_pocznotkowe[3]=polorzenie_koncowe[3]
                 print( "".join(polorzenie_pocznotkowe),12)
                 polorzenie_pocznotkowe[6]=polorzenie_koncowe[6]
@@ -97,6 +97,7 @@ def poruszanie_po_halah(polorzenie_koncowe, polorzenie_pocznotkowe):
 
 
 polorzenie_pocznotkowe1="H301A05"
+print(polorzenie_pocznotkowe1)
 polorzenie_koncowe1="H102A09"
 prubna_list=[polorzenie_pocznotkowe1,polorzenie_koncowe1]
 prubna_list= gdzie_idziesz(polorzenie_koncowe1, polorzenie_pocznotkowe1)
