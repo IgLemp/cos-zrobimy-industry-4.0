@@ -2,6 +2,8 @@ from flask import Flask, redirect
 from helpers import load_site, load_database
 
 app = Flask(__name__)
+
+# TODO: this is awfull, make it use a real database with ORM
 database_data = load_database()
 
 # the minimal Flask application
@@ -62,20 +64,3 @@ def database(number: int):
                 {res}
             </table>
             """
-        
-
-# bind multiple URL for one view function
-@app.route('/hi')
-@app.route('/hello')
-def say_hello():
-    return '<h1>Hello, Flask!</h1>'
-
-
-# dynamic route, URL variable default
-@app.route('/greet', defaults={'name': 'Programmer'})
-@app.route('/greet/<name>')
-def greet(name):
-    return '<h1>Hello, %s!</h1>' % name
-
-# run
-app.run(host='192.168.1.18', debug=True)
