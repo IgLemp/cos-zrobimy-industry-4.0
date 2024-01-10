@@ -2,8 +2,6 @@ from flask import Flask, redirect
 
 app = Flask(__name__)
 
-index_file = open("./site/index.html", "r").read()
-style_file = open("./site/style.css",  "r").read()
 
 # the minimal Flask application
 @app.route('/')
@@ -12,11 +10,18 @@ def root():
 
 @app.route('/index.html')
 def index():
-    return index_file
+    with open("./site/index.html", "r") as file:
+        return file.read()
 
 @app.route('/style.css')
 def style():
-    return style_file
+    with open("./site/style.css",  "r") as file:
+        return file.read()
+    
+@app.route('/undefined')
+def undefined():
+    return 'Fuck off!'
+        
 
 # bind multiple URL for one view function
 @app.route('/hi')
