@@ -42,14 +42,14 @@ def database_page():
 def database(number: int):
     # loads 50 first entries
     res = ""
-    products_data = sorted(database_data, key=lambda x: x['ID Produktu'], reverse=False)
+    products_data = sorted(database_data, key=lambda x: x['ID'], reverse=False)
     for i in range(0, min(number, len(products_data))):
         res = res + f"""
             <tr>
-                <td>{products_data[i]['ID Produktu']}</td>
-                <td>{products_data[i]['Nazwa Produktu']}</td>
-                <td>{products_data[i]['Waga (kg)']}</td>
-                <td>{products_data[i]['Wymiary (mm)']}</td>
+                <td>{products_data[i]['ID']}</td>
+                <td>{products_data[i]['Name']}</td>
+                <td>{products_data[i]['Weight']}</td>
+                <td>{'x'.join(products_data[i]['Dimensions'])})</td>
             </tr>
             """
     

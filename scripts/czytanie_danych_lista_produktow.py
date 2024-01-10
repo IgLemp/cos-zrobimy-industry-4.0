@@ -12,18 +12,28 @@ def load_data() -> list:
         for row in reader:
             # Zapisywanie danych do listy
             product_info = {
-                'ID Produktu': row['ID Produktu'],
-                'Nazwa Produktu': row['Nazwa Produktu'],
-                'Waga (kg)': float(row['Waga (kg)']),  # Konwersja wagi na float dla poprawnego sortowania
-                'Wymiary (mm)': row['Wymiary (mm)'],
+                'ID Produktu':     row['ID Produktu'],
+                'Nazwa Produktu':  row['Nazwa Produktu'],
+                'Waga (kg)': float(row['Waga (kg)']),
+                'Wymiary (mm)':    row['Wymiary (mm)'],
             }
             products_data.append(product_info)
 
     # Sortowanie listy produktów według wagi (malejąco)
     products_data = sorted(products_data, key=lambda x: x['Waga (kg)'], reverse=True)
+    
+    parsed_data = {}
+    for rec in products_data:
+        dim: str = rec['Wymiary (mm)'].split('x')
+        
+        parsed_data[str(int(rec['ID Produktu']))] = {
+            'name':       rec['Nazwa Produktu'],
+            'weight':     rec['Waga (kg)'],
+            'dimensions': {
+                'x': dim[0],
+                'y': dim[1],
+                'z': dim[2]
+            }
+        }
 
-    # Wyświetlanie wczytanych i posegregowanych danych
-    for product_info in products_data:
-        print(f"ID: {product_info['ID Produktu']}, Dane: {product_info}")
-
-    return products_data
+    return parsed_data
