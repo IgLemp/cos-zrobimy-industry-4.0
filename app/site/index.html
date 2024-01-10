@@ -8,10 +8,14 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-    <h1>menu</h1>
-    <ul>
-        <li><a href="database.html">database</a></li>
-        <li><a href="orders.html">orders</a></li>
-    </ul>
+    <header>
+        <h1>Menu</h1>
+        <nav hx-get="/components/menu.html" hx-trigger="load"></nav>
+    </header>
+    <section>
+        <h2>Statistics</h2>
+        <p>Amount of packages in database: <b hx-get="/database/count" hx-trigger="load" hx-swap="innerHTML"></b></p>
+        <p>Amount of active orders: <b hx-get="/orders/count" hx-trigger="load" hx-swap="innerHTML"></b></p>
+    </section>
 </body>
 </html>

@@ -14,27 +14,27 @@ def root():
 
 @app.route('/index.html')
 def index():
-    return load_site('./site/index.html')
+    return send_file('./site/index.html')
 
 @app.route('/style.css')
 def style():
-    return Response(load_site('./site/style.css'), mimetype='text/css')
+    return send_file('./site/style.css')
 
 @app.route('/package_route.html')
 def package_route_page():
-    return load_site('./site/package_route.html')
+    return send_file('./site/package_route.html')
 
 @app.route('/package_layout.html')
 def package_layout_page():
-    return load_site('./site/package_layout.html')
+    return send_file('./site/package_layout.html')
 
 @app.route('/database.html')
 def database_page():
-    return load_site('./site/database.html')
+    return send_file('./site/database.html')
 
 @app.route('/orders.html')
 def orders_page():
-    return load_site('./site/orders.html')
+    return send_file('./site/orders.html')
 
 @app.route('/order.html')
 def order_page():
@@ -43,16 +43,27 @@ def order_page():
 
 @app.route('/components/menu.html')
 def menu_component():
-    return load_site('./components/menu.html')
+    return send_file('./components/menu.html')
 
 @app.route('/data/kekw.png')
 def kekw():
     return send_file('./data/kekw.png')
 
 
+
+@app.route('/database/count')
+def database_count():
+    return f"{len(database_data)}"
+
+@app.route('/orders/count')
+def orders_count():
+    return f"{len(orders_data)}"
+
+
+
 @app.route('/orders')
 def orders():
-    orders_list = sorted(orders_data, key=lambda x: x['ID'], reverse=False)
+    orders_list = sorted(orders_data, key=lambda x: int(x['ID']), reverse=False)
     amount = len(orders_list)
     
     head = f"""<h2>Current number of orders: {amount}</h2>"""
@@ -112,17 +123,14 @@ def order():
 def database():
     order_by = request.args.get('order', default='ID', type=str)
     selected = request.args.get('count', default=20, type=int)
-    ascending = request.args.get('ascending', default=False, type=bool)
-    # print("order_by:", order_by)
-    # print("selected:", selected)
-    # print("ascending:", ascending)
+    ascending = bool(request.args.get('ascending', default=1, type=int))
     
     order_by = order_by if order_by in ['ID', 'Name', 'Weight', 'Dimensions'] else 'ID'
     if selected < 0: selected = 0
     if selected > len(database_data): selected = len(database_data)
     
     res = ""
-    products_data = sorted(database_data, key=lambda x: x[order_by], reverse=ascending)
+    products_data = sorted(database_data, key=lambda x: x[order_by], reverse=(not ascending))
     for i in range(0, min(selected, len(products_data))):
         res = res + f"""
             <tr>
@@ -146,4 +154,4 @@ def database():
             """
         
 
-app.run(host='192.168.1.18')
+app.run(host='192.168.1.18', debug=True)
