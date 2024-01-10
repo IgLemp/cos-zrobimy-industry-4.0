@@ -5,10 +5,10 @@ import os
 products_data = []
 
 # Nazwa pliku CSV
-csv_file = 'dane_produktow.csv'
+csv_file = os.path.join('ListaProduktow.csv')
 
 # Wczytywanie danych z pliku CSV
-with open(os.path.join('ListaProduktow.csv'), 'r') as file:
+with open(csv_file, 'r') as file:
     reader = csv.DictReader(file)
     for row in reader:
         # Zapisywanie danych do listy
