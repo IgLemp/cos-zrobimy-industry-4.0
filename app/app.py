@@ -1,13 +1,22 @@
-from flask import Flask
+from flask import Flask, redirect
 
 app = Flask(__name__)
 
+index_file = open("./site/index.html", "r").read()
+style_file = open("./site/style.css",  "r").read()
 
 # the minimal Flask application
 @app.route('/')
-def index():
-    return '<h1>Hello, World!</h1>'
+def root():
+    return redirect('/index.html')
 
+@app.route('/index.html')
+def index():
+    return index_file
+
+@app.route('/style.css')
+def style():
+    return style_file
 
 # bind multiple URL for one view function
 @app.route('/hi')
