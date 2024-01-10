@@ -8,7 +8,12 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-    <h1>Current orders</h1>
-    <div hx-get="/orders" hx-trigger="load"></div>
+    <header>
+        <h1>Current orders</h1>
+        <nav hx-get="/components/menu.html" hx-trigger="load"></nav>
+    </header>
+    <section>
+        <div hx-get="/orders" hx-trigger="load"></div>
+    </section>
 </body>
 </html>

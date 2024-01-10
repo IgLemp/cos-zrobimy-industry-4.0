@@ -8,30 +8,32 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-    <h1>Database</h1>
-    <input type="number" name="Number of entries" oninput="changeSelected()", id="pSel">
-    <select name="Sort by" oninput="changeSort()" id="pTyp">
-        <option value="ID">ID</option>
-        <option value="Name">Name</option>
-        <option value="Weight">Weight</option>
-        <option value="Size">Size</option>
-    </select>
-    <select name="Sort order" oninput="changeOrder()" id="pOrd">
-        <option value="True">ascending</option>
-        <option value="False">descending</option>
-    </select>
-    <button hx-get="/database/get_entries" hx-swap="innerHTML" hx-target="#tableDiv" hx-vals="js:{'order': sort_by, 'count': count, 'ascending': order}" id="requestButton">Search</button>
-    <div style="padding-top: 5%;", id="tableDiv">
-        <div hx-get="/database/get_entries" hx-trigger="load">
-    </div>
+    <header>
+        <h1>Database</h1>
+        <nav hx-get="/components/menu.html" hx-trigger="load"></nav>
+    </header>
+    <section>
+        <input type="number" name="Number of entries" oninput="changeSelected()", id="pSel" placeholder="20">
+        <select name="Sort by" oninput="changeSort()" id="pTyp">
+            <option value="ID">ID</option>
+            <option value="Name">Name</option>
+            <option value="Weight">Weight</option>
+            <option value="Size">Size</option>
+        </select>
+        <select name="Sort order" oninput="changeOrder()" id="pOrd">
+            <option value="true">ascending</option>
+            <option value="false">descending</option>
+        </select>
+        <button hx-get="/database/get_entries" hx-swap="innerHTML" hx-target="#tableDiv" hx-vals="js:{'order': sort_by, 'count': count, 'ascending': order}" id="requestButton">Search</button>
+        <div style="padding-top: 1%;", id="tableDiv">
+            <div hx-get="/database/get_entries" hx-trigger="load">
+        </div>
+    </section>
 </body>
 <script>
-    var order = "False"
+    var order = "false"
     var sort_by = "ID";
     var count = 20;
-
-    // var reqbutt = document.getElementById("requestButton");
-    // reqbutt.setAttribute("hx-get", `/database/get_entries?order=${sort_by}&count=${count}&ascending=${order}`)
 
     const changeSelected = () => {
         var v = document.getElementById("pSel").value;
@@ -46,6 +48,12 @@
     const changeOrder = () => {
         var v = document.getElementById("pOrd").value;
         order = v;
+    }
+
+    document.onload = () => {
+        changeSelected();
+        changeSort();
+        changeOrder();
     }
 
 </script>
