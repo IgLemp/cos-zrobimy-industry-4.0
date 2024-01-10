@@ -57,4 +57,7 @@ def load_orders():
     return data
 
 if __name__ == '__main__':
-    print(load_orders()[0])
+    orders = load_orders()
+    # print(load_orders()[0])
+    # print(orders)
+    print([ord for ord in orders if ord['ID'] == '20'][0])

@@ -36,6 +36,12 @@ def database_page():
 def orders_page():
     return load_site('./site/orders.html')
 
+@app.route('/order.html')
+def order_page():
+    return load_site('./site/order.html')
+
+
+
 
 @app.route('/orders')
 def orders():
@@ -49,6 +55,7 @@ def orders():
             <tr>
                 <td>{order['ID']}</td>
                 <td>{len(order['Data'])}</td>
+                <td id="orderButton"><a href="/order?id={order['ID']}">Show order</a></td>
             </tr>
             """
     
@@ -65,8 +72,36 @@ def orders():
 
 @app.route('/order')
 def order():
-    request.args.get()
-    return ''
+    id = request.args.get('id', default=1, type=int)
+    order = ([ord for ord in orders_data if ord['ID'] == str(id)])[0]['Data']
+    
+    head = f"""
+        <h2>Order ID: {id}</h2>
+        """
+    
+    table = ""
+    for prod in order:
+        table = table + f"""
+            <tr>
+                <td>{prod['ID']}</td>
+                <td>{prod['Name']}</td>
+                <td>{prod['Location']}</td>
+                <td>{prod['Amount']}</td>
+            </tr>
+            """
+    
+    return f"""
+        {head}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Amount</th>
+            </tr>
+            {table}
+        </table>
+        """
 
 
 @app.route('/database/get_entries')

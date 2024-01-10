@@ -36,25 +36,17 @@
     const changeSelected = () => {
         var v = document.getElementById("pSel").value;
         count = parseInt(v);
-        // updateURI();
     }
     
     const changeSort = () => {
         var v = document.getElementById("pTyp").value;
         sort_by = v;
-        // updateURI();
     }
     
     const changeOrder = () => {
         var v = document.getElementById("pOrd").value;
         order = v;
-        // updateURI();
     }
-
-    // const updateURI = () => {
-    //     reqbutt.setAttribute("hx-get", `/database/get_entries?order=${sort_by}&count=${count}&ascending=${order}`)
-    //     htmx.process("requestButton");
-    // }
 
 </script>
 </html>
