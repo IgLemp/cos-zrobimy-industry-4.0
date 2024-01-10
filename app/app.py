@@ -1,10 +1,11 @@
 from flask import Flask, redirect, Response, request
-from helpers import load_site, load_database
+from helpers import load_site, load_database, load_orders
 
 app = Flask(__name__)
 
 # TODO: this is awfull, make it use a real database with ORM
 database_data = load_database()
+orders_data = load_orders()
 
 # the minimal Flask application
 @app.route('/')
@@ -37,6 +38,12 @@ def orders_page():
 
 
 @app.route('/orders')
+def orders():
+    return ''
+
+@app.route('/order')
+def order():
+    return ''
 
 
 @app.route('/database/get_entries')
