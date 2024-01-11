@@ -42,7 +42,7 @@ def gdzie_idziesz(polorzenie_koncowe, polorzenie_pocznotkowe):
                     polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])-1)
                 else:
                     polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])+1)
-                print( "".join(polorzenie_pocznotkowe),18)
+                print( "".join(polorzenie_pocznotkowe),22)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
                 if(int(polorzenie_koncowe[3])%2==0):
                     polorzenie_pocznotkowe[5]=str(4)
@@ -139,7 +139,7 @@ zmienne_dane=[]
 polorzenie_pocznotkowe1="H106A00"
 zmienne_dane.append(polorzenie_pocznotkowe1)
 print(polorzenie_pocznotkowe1)
-polorzenie_koncowe1="H204A10"
+polorzenie_koncowe1="H506A05"
 prubna_list=[polorzenie_pocznotkowe1,polorzenie_koncowe1]
 prubna_list= gdzie_idziesz(polorzenie_koncowe1, polorzenie_pocznotkowe1)
 
