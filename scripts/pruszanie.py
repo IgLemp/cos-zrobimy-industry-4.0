@@ -24,7 +24,7 @@ def gdzie_idziesz(polorzenie_koncowe, polorzenie_pocznotkowe):
                 polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])-1)
                 print( "".join(polorzenie_pocznotkowe),18)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
-            elif(polorzenie_pocznotkowe[3]>=polorzenie_koncowe[3]):
+            elif(polorzenie_pocznotkowe[3]<=polorzenie_koncowe[3]):
                 polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])+1)
                 print( "".join(polorzenie_pocznotkowe),18)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
@@ -124,7 +124,7 @@ print(polorzenie_pocznotkowe1)
 polorzenie_koncowe1="H101A04"
 prubna_list=[polorzenie_pocznotkowe1,polorzenie_koncowe1]
 prubna_list= gdzie_idziesz(polorzenie_koncowe1, polorzenie_pocznotkowe1)
-zmienne_dane.append(prubna_list[1])
+# zmienne_dane.append(prubna_list[1])
 print(prubna_list[1],10)
 
 with open('scripts/zapis_róchów.txt','w') as plik:
