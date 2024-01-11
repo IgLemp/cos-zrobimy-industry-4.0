@@ -24,7 +24,7 @@ def rysuj_prosta(lista_punktow):
 
     map_image.save("koniec.jpg")
 # Otwieramy plik magazyn.txt do odczytu
-with open('magazyn.txt', 'r') as file:
+with open('scripts/magazyn.txt', 'r') as file:
     # Inicjalizujemy pusty słownik
     magazyn_dict = {}
 
@@ -36,8 +36,10 @@ with open('magazyn.txt', 'r') as file:
         # Tworzymy wpis w słowniku
         x, y, key = int(columns[0]), int(columns[1]), columns[2]
         magazyn_dict[key] = {'X': x, 'Y': y}
-
-kroki=["H103A10","H103A40","H104A40","H104A00","H104A00","H301A00","H301A00","H302A00","H202A00","H202A00","H401A00","H401A00","H401A00","H401A09"]
+kroki = []
+with open('scripts/zapis_róchów.txt', 'r') as file:
+    for line in file:
+        kroki.append(line.strip())
 kwadraty=[]
 linie=[]
 pocz=0
