@@ -1,7 +1,9 @@
 from flask import Flask, redirect, Response, request, send_file
-from helpers import load_site, load_database, load_orders
+from helpers import load_site
 from attic import database_data, orders_data
 from packing import pack_to_palette
+from movement import generate_path
+from drawing import generate_path_image
 
 app = Flask(__name__)
 
@@ -42,7 +44,18 @@ def order_page(id: int):
         plots += f"""
             <img src="/data/plots/{f}" alt="figure">
             """
-    return load_site('./site/order.html').replace('{id}', str(id)).replace("{plots}", plots).replace("{plots_n}", str(len(figures)))
+    
+    maps = ""
+    for d in orders_data[1:]:
+        maps += f"""
+            <img src="/order/{id}/map" alt="map">
+            """
+    
+    site = load_site('./site/order.html').replace('{id}', str(id))
+    site = site.replace("{plots}", plots)
+    site = site.replace("{plots_n}", str(len(figures)))
+    site = site.replace("{map_source}", maps)
+    return site
 
 @app.route('/components/menu.html')
 def menu_component():
@@ -99,6 +112,19 @@ def orders():
             {st}
         </table>
         """
+
+@app.route('/order/<id>/map')
+def get_map(id: int):
+    order = ([ord for ord in orders_data if ord['ID'] == str(id)])[0]['Data']
+    
+    # Utter retardedness
+    prev_loc = order[0]['Location']
+    for d in order[1:]:
+        generate_path(prev_loc, d['Location'])
+        generate_path_image(f"{id}-{d['Location']}.jpg")
+    
+    return send_file(f"{id}-{d['Location']}.jpg")
+        
 
 @app.route('/order/<id>')
 def order(id: int):
