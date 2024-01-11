@@ -113,13 +113,13 @@ def poruszanie_po_halah(polorzenie_koncowe, polorzenie_pocznotkowe):
     return(gdzie_idziesz(polorzenie_koncowe, polorzenie_pocznotkowe))
 
 zmienne_dane=[]
-polorzenie_pocznotkowe1="H402A10"
+polorzenie_pocznotkowe1="H407A08"
 zmienne_dane.append(polorzenie_pocznotkowe1)
 print(polorzenie_pocznotkowe1)
-polorzenie_koncowe1="H103A01"
+polorzenie_koncowe1="H101A04"
 prubna_list=[polorzenie_pocznotkowe1,polorzenie_koncowe1]
 prubna_list= gdzie_idziesz(polorzenie_koncowe1, polorzenie_pocznotkowe1)
 zmienne_dane.append(prubna_list[1])
 print(prubna_list[1],10)
-with open('zapis_róchów.txt','w') as plik:
+with open('scripts/zapis_róchów.txt','w') as plik:
     plik.write(str(zmienne_dane))
