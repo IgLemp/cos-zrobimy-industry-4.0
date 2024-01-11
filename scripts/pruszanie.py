@@ -13,15 +13,19 @@ def gdzie_idziesz(polorzenie_koncowe, polorzenie_pocznotkowe):
         polorzenie_koncowe=prubna_list[0]
         polorzenie_pocznotkowe=prubna_list[1]
 
-        if(polorzenie_pocznotkowe[3]>=polorzenie_koncowe[3]):
+        if(polorzenie_pocznotkowe[3]!=polorzenie_koncowe[3]):
             if(int(polorzenie_koncowe[5])*10+int(polorzenie_koncowe[6])>8):
                 polorzenie_pocznotkowe[3]=polorzenie_koncowe[3]
                 print( "".join(polorzenie_pocznotkowe),12)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
                 polorzenie_pocznotkowe[6]=polorzenie_koncowe[6]
                 polorzenie_pocznotkowe[5]=polorzenie_koncowe[5]
-            else:
+            elif(polorzenie_pocznotkowe[3]>=polorzenie_koncowe[3]):
                 polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])-1)
+                print( "".join(polorzenie_pocznotkowe),18)
+                zmienne_dane.append("".join(polorzenie_pocznotkowe))
+            elif(polorzenie_pocznotkowe[3]>=polorzenie_koncowe[3]):
+                polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])+1)
                 print( "".join(polorzenie_pocznotkowe),18)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
                 if(int(polorzenie_koncowe[3])%2==0):
