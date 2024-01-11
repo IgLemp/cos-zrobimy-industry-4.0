@@ -70,6 +70,7 @@ def wychodzenie_z_alejek_bocznych(polorzenie_koncowe, polorzenie_pocznotkowe):
                 polorzenie_pocznotkowe[3]=str(int(polorzenie_pocznotkowe[3])-1)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
                 print("".join(polorzenie_pocznotkowe),2)
+            
             polorzenie_pocznotkowe[5]=str(0)
             polorzenie_pocznotkowe[6]=str(0)
             zmienne_dane.append("".join(polorzenie_pocznotkowe))
@@ -121,5 +122,7 @@ prubna_list=[polorzenie_pocznotkowe1,polorzenie_koncowe1]
 prubna_list= gdzie_idziesz(polorzenie_koncowe1, polorzenie_pocznotkowe1)
 zmienne_dane.append(prubna_list[1])
 print(prubna_list[1],10)
+
 with open('scripts/zapis_róchów.txt','w') as plik:
-    plik.write(str(zmienne_dane))
+    for i in zmienne_dane:
+        plik.write(str(i+"\n"))
