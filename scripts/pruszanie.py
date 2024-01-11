@@ -121,5 +121,7 @@ prubna_list=[polorzenie_pocznotkowe1,polorzenie_koncowe1]
 prubna_list= gdzie_idziesz(polorzenie_koncowe1, polorzenie_pocznotkowe1)
 zmienne_dane.append(prubna_list[1])
 print(prubna_list[1],10)
+
 with open('scripts/zapis_róchów.txt','w') as plik:
-    plik.write(str(zmienne_dane))
+    for i in zmienne_dane:
+        plik.write(str(i+"\n"))
