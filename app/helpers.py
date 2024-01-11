@@ -45,10 +45,10 @@ def load_orders():
             reader = csv.DictReader(file)
             for row in reader:
                 order_data = {
-                    'ID':       row['ID Produktu'],
+                    'ID':       int(row['ID Produktu']),
                     'Name':     row['Nazwa Produktu'],
                     'Location': row['Lokacja'],
-                    'Amount':   row['Ilość']
+                    'Amount':   int(row['Ilość'])
                 }
                 file_data.append(order_data)
             

@@ -1,11 +1,9 @@
 from flask import Flask, redirect, Response, request, send_file
 from helpers import load_site, load_database, load_orders
+from attic import database_data, orders_data
+from packing import pack_to_palette
 
 app = Flask(__name__)
-
-# TODO: this is awfull, make it use a real database with ORM
-database_data = load_database()
-orders_data = load_orders()
 
 # the minimal Flask application
 @app.route('/')
@@ -38,11 +36,22 @@ def orders_page():
 
 @app.route('/order.html/<id>')
 def order_page(id: int):
-    return load_site('./site/order.html').replace('{id}', str(id))
+    figures = pack_to_palette(str(id))
+    plots = ""
+    for f in figures:
+        plots += f"""
+            <img src="/data/plots/{f}" alt="figure">
+            """
+    return load_site('./site/order.html').replace('{id}', str(id)).replace("{plots}", plots).replace("{plots_n}", str(len(figures)))
 
 @app.route('/components/menu.html')
 def menu_component():
     return send_file('./components/menu.html')
+
+@app.route('/data/plots/<p_name>')
+def get_plot(p_name: str):
+    return send_file(f"./data/plots/{p_name}")
+
 
 @app.route('/data/kekw.png')
 def kekw():
@@ -99,7 +108,7 @@ def order(id: int):
     order = ([ord for ord in orders_data if ord['ID'] == str(id)])[0]['Data']
     if order_by == 'ID': order_list = sorted(order, key=lambda x: (x['ID']), reverse=(not ascending))
     if order_by == 'Name': order_list = sorted(order, key=lambda x: (x['Name']), reverse=(not ascending))
-    if order_by == 'Amount': order_list = sorted(order, key=lambda x: int(x['Amount']), reverse=(not ascending))
+    if order_by == 'Amount': order_list = sorted(order, key=lambda x: (x['Amount']), reverse=(not ascending))
     
     table = ""
     for prod in order_list:

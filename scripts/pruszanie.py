@@ -21,26 +21,32 @@ def gdzie_idziesz(polorzenie_koncowe, polorzenie_pocznotkowe):
                 polorzenie_pocznotkowe[6]=polorzenie_koncowe[6]
                 polorzenie_pocznotkowe[5]=polorzenie_koncowe[5]
             elif(polorzenie_pocznotkowe[3]>=polorzenie_koncowe[3]):
-                polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])-1)
+                if(int(polorzenie_koncowe[3])==1):
+                    polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])+1)
+                else:
+                    polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])-1)
                 print( "".join(polorzenie_pocznotkowe),18)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
             elif(polorzenie_pocznotkowe[3]<=polorzenie_koncowe[3]):
-                polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])+1)
+                if(int(polorzenie_koncowe[3])==7):
+                    polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])-1)
+                else:
+                    polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3])+1)
                 print( "".join(polorzenie_pocznotkowe),18)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
-                if(int(polorzenie_koncowe[3])%2==0):
-                    polorzenie_pocznotkowe[5]=str(4)
-                    print( "".join(polorzenie_pocznotkowe),12)
-                    zmienne_dane.append("".join(polorzenie_pocznotkowe))
-                else:
-                    polorzenie_pocznotkowe[5]=str(2)
-                    print( "".join(polorzenie_pocznotkowe),13)
-                    zmienne_dane.append("".join(polorzenie_pocznotkowe))
-                polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3]))
-                print( "".join(polorzenie_pocznotkowe),14)
+            if(int(polorzenie_koncowe[3])%2==0):
+                polorzenie_pocznotkowe[5]=str(4)
+                print( "".join(polorzenie_pocznotkowe),12)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
-                polorzenie_pocznotkowe[6]=polorzenie_koncowe[6]
-                polorzenie_pocznotkowe[5]=polorzenie_koncowe[5]
+            else:
+                polorzenie_pocznotkowe[5]=str(2)
+                print( "".join(polorzenie_pocznotkowe),13)
+                zmienne_dane.append("".join(polorzenie_pocznotkowe))
+            polorzenie_pocznotkowe[3]=str(int(polorzenie_koncowe[3]))
+            print( "".join(polorzenie_pocznotkowe),14)
+            zmienne_dane.append("".join(polorzenie_pocznotkowe))
+            polorzenie_pocznotkowe[6]=polorzenie_koncowe[6]
+            polorzenie_pocznotkowe[5]=polorzenie_koncowe[5]
         prubna_list=[polorzenie_koncowe,polorzenie_pocznotkowe]
         zmienne_dane.append("".join(prubna_list[1]))
         print( "".join(prubna_list[1]),11)
@@ -118,10 +124,10 @@ def poruszanie_po_halah(polorzenie_koncowe, polorzenie_pocznotkowe):
     return(gdzie_idziesz(polorzenie_koncowe, polorzenie_pocznotkowe))
 
 zmienne_dane=[]
-polorzenie_pocznotkowe1="H407A08"
+polorzenie_pocznotkowe1="H402A08"
 zmienne_dane.append(polorzenie_pocznotkowe1)
 print(polorzenie_pocznotkowe1)
-polorzenie_koncowe1="H101A04"
+polorzenie_koncowe1="H501A08"
 prubna_list=[polorzenie_pocznotkowe1,polorzenie_koncowe1]
 prubna_list= gdzie_idziesz(polorzenie_koncowe1, polorzenie_pocznotkowe1)
 # zmienne_dane.append(prubna_list[1])

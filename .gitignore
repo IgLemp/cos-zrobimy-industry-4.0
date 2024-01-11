@@ -2,3 +2,4 @@ industry-4.0
 .venv
 __pycache__
 poetry.lock
+/app/data/plots/*
