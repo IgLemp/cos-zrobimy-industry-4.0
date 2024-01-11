@@ -13,7 +13,21 @@
         <nav hx-get="/components/menu.html" hx-trigger="load"></nav>
     </header>
     <section>
-        <div hx-get="/orders" hx-trigger="load"></div>
+        <h2>Current number of orders <b hx-get="/orders/count" hx-trigger="load"></b></h2>
+        <form hx-get="/orders" hx-target="#tableDiv">
+            <select name="order" oninput="changeSort()" id="pTyp">
+                <option value="ID">ID</option>
+                <option value="Count">Count</option>
+            </select>
+            <select name="ascending" oninput="changeOrder()" id="pOrd">
+                <option value="1">ascending</option>
+                <option value="0">descending</option>
+            </select>
+            <button type="submit">search</button>
+        </form>
+        <div style="padding-top: 1%;", id="tableDiv">
+            <div hx-get="/orders" hx-trigger="load"></div>
+        </div>
     </section>
 </body>
 </html>

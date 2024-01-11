@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magazyn 4.0</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
@@ -14,7 +14,21 @@
     </header>
     <section>
         <h2>Order ID: {id}</h2>
-        <div hx-get="/order?id={id}" hx-trigger="load"></div>
+        <form hx-get="/order/{id}" hx-target="#tableDiv">
+            <select name="order" oninput="changeSort()" id="pTyp">
+                <option value="ID">ID</option>
+                <option value="Name">Name</option>
+                <option value="Amount">Amount</option>
+            </select>
+            <select name="ascending" oninput="changeOrder()" id="pOrd">
+                <option value="1">ascending</option>
+                <option value="0">descending</option>
+            </select>
+            <button type="submit">search</button>
+        </form>
+        <div style="padding-top: 1%;", id="tableDiv">
+            <div hx-get="/order/{id}" hx-trigger="load"></div>
+        </div>
         <div style="padding-top: 8%;"></div>
         <h2>Order route:</h2>
         <h3>Nie ma</h3>
