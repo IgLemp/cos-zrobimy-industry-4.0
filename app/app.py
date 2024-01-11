@@ -36,9 +36,8 @@ def database_page():
 def orders_page():
     return send_file('./site/orders.html')
 
-@app.route('/order.html')
-def order_page():
-    id = request.args.get('id', default=1, type=int)
+@app.route('/order.html/<id>')
+def order_page(id: int):
     return load_site('./site/order.html').replace('{id}', str(id))
 
 @app.route('/components/menu.html')
@@ -63,10 +62,13 @@ def orders_count():
 
 @app.route('/orders')
 def orders():
-    orders_list = sorted(orders_data, key=lambda x: int(x['ID']), reverse=False)
-    amount = len(orders_list)
+    order_by = request.args.get('order', default='ID', type=str)
+    ascending = bool(request.args.get('ascending', default=1, type=int))
     
-    head = f"""<h2>Current number of orders: {amount}</h2>"""
+    if order_by == 'ID': orders_list = sorted(orders_data, key=lambda x: int(x['ID']), reverse=(not ascending))
+    elif order_by == 'Count': orders_list = sorted(orders_data, key=lambda x: len(x['Data']), reverse=(not ascending))
+    
+    amount = len(orders_list)
     
     st = ""
     for order in orders_list:
@@ -74,29 +76,33 @@ def orders():
             <tr>
                 <td>{order['ID']}</td>
                 <td>{len(order['Data'])}</td>
-                <td id="orderButton"><a href="/order.html?id={order['ID']}">Show order</a></td>
+                <td id="orderButton"><a href="/order.html/{order['ID']}">Show order</a></td>
             </tr>
             """
     
     return f"""
-        {head}
         <table>
             <tr>
                 <th>ID</th>
                 <th>Items amount</th>
-                <th>button</th>
+                <th></th>
             </tr>
             {st}
         </table>
         """
 
-@app.route('/order')
-def order():
-    id = request.args.get('id', default=1, type=int)
+@app.route('/order/<id>')
+def order(id: int):
+    order_by = request.args.get('order', default='ID', type=str)
+    ascending = bool(request.args.get('ascending', default=1, type=int))
+    
     order = ([ord for ord in orders_data if ord['ID'] == str(id)])[0]['Data']
+    if order_by == 'ID': order_list = sorted(order, key=lambda x: (x['ID']), reverse=(not ascending))
+    if order_by == 'Name': order_list = sorted(order, key=lambda x: (x['Name']), reverse=(not ascending))
+    if order_by == 'Amount': order_list = sorted(order, key=lambda x: int(x['Amount']), reverse=(not ascending))
     
     table = ""
-    for prod in order:
+    for prod in order_list:
         table = table + f"""
             <tr>
                 <td>{prod['ID']}</td>
