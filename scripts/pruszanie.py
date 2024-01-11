@@ -139,7 +139,7 @@ zmienne_dane=[]
 polorzenie_pocznotkowe1="H106A00"
 zmienne_dane.append(polorzenie_pocznotkowe1)
 print(polorzenie_pocznotkowe1)
-polorzenie_koncowe1="H506A05"
+polorzenie_koncowe1="H202A01"
 prubna_list=[polorzenie_pocznotkowe1,polorzenie_koncowe1]
 prubna_list= gdzie_idziesz(polorzenie_koncowe1, polorzenie_pocznotkowe1)
 
