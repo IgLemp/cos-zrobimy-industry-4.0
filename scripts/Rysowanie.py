@@ -9,20 +9,20 @@ def przyporzadkuj(liczba):
     elif 7 == liczba or liczba== 8 or liczba==10 or liczba==9:
         return 4
 def rysuj_kwadrat(lista_punktow):
-    map_image = Image.open("mapa.jpg")
+    map_image = Image.open("scripts/rys/mapa.jpg")
     draw = ImageDraw.Draw(map_image)
     for x, y in lista_punktow:
         draw.rectangle([x - 12.5, y-12.5, x + 12.5, y+12.5], fill=(255, 0, 0))
-    map_image.save("pomoc.jpg")
+    map_image.save("scripts/rys/pomoc.jpg")
 def rysuj_prosta(lista_punktow):
-    map_image = Image.open("pomoc.jpg")
+    map_image = Image.open("scripts/rys/pomoc.jpg")
     draw = ImageDraw.Draw(map_image)
     for i in range(len(lista_punktow) - 1):
         (x1, y1) = lista_punktow[i]
         (x2, y2) = lista_punktow[i + 1]
         draw.line([(x1, y1), (x2, y2)], fill=(255, 0, 0), width=5)
 
-    map_image.save("koniec.jpg")
+    map_image.save("scripts/rys/koniec.jpg")
 # Otwieramy plik magazyn.txt do odczytu
 with open('scripts/magazyn.txt', 'r') as file:
     # Inicjalizujemy pusty słownik
