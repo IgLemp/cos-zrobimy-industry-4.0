@@ -44,45 +44,17 @@ kwadraty=[]
 linie=[]
 pocz=0
 koniec=len(kroki)
-if kroki[0][5::] not in ["20","00","40"]:
-    pocz+=1
-    liczba=przyporzadkuj(int(kroki[0][5::]))
-    if int(kroki[1][2:4])%2==0:
-        kwadraty.append((magazyn_dict[kroki[1]]['X']+95*(8-liczba), magazyn_dict[kroki[1]]['Y']))
-        if int(kroki[1][5::])%2==0:
-            linie.append((magazyn_dict[kroki[1]]['X']+95*(8-liczba), magazyn_dict[kroki[1]]['Y']-50))
-        else:
-            linie.append((magazyn_dict[kroki[len(kroki)-2]]['X']+95*(8-liczba), magazyn_dict[kroki[1]]['Y']+50))
-        linie.append((magazyn_dict[kroki[1]]['X']+95*(8-liczba), magazyn_dict[kroki[1]]['Y']))
-    else:
-        kwadraty.append((magazyn_dict[kroki[1]]['X']-95*(liczba), magazyn_dict[kroki[1]]['Y']))
-        if int(kroki[0][5::])%2==0:
-            linie.append((magazyn_dict[kroki[1]]['X']-95*(liczba), magazyn_dict[kroki[1]]['Y']+50))
-        else:
-            linie.append((magazyn_dict[kroki[1]]['X']-95*(liczba), magazyn_dict[kroki[1]]['Y']-50))
-        linie.append((magazyn_dict[kroki[1]]['X']-95*(liczba), magazyn_dict[kroki[1]]['Y']))
-if kroki[len(kroki)-1][5::] not in ["20","00","40"]:
-    koniec-=1
+if int(kroki[1][2:4])%2==0 and kroki[1][5::] not in ['20','00','40']:
+    linie.append((magazyn_dict[kroki[1]]['X'], magazyn_dict[kroki[1]]['Y']-50))
+else:
+    linie.append((magazyn_dict[kroki[1]]['X'], magazyn_dict[kroki[1]]['Y']+50))
 for i in range(pocz,koniec):
     kwadraty.append((magazyn_dict[kroki[i]]['X'], magazyn_dict[kroki[i]]['Y']))
     linie.append((magazyn_dict[kroki[i]]['X'], magazyn_dict[kroki[i]]['Y']))
-    
-if kroki[len(kroki)-1][5::] not in ["20","00","40"]:
-    liczba=przyporzadkuj(int(kroki[len(kroki)-1][5::]))
-    if int(kroki[len(kroki)-1][2:4])%2==0:
-        kwadraty.append((magazyn_dict[kroki[len(kroki)-2]]['X']-95*(5-liczba), magazyn_dict[kroki[len(kroki)-2]]['Y']))
-        linie.append((magazyn_dict[kroki[len(kroki)-2]]['X']-95*(5-liczba), magazyn_dict[kroki[len(kroki)-2]]['Y']))
-        if int(kroki[len(kroki)-1][5::])%2==0:
-            linie.append((magazyn_dict[kroki[len(kroki)-2]]['X']-95*(5-liczba), magazyn_dict[kroki[len(kroki)-2]]['Y']-50))
-        else:
-            linie.append((magazyn_dict[kroki[len(kroki)-2]]['X']-95*(5-liczba), magazyn_dict[kroki[len(kroki)-2]]['Y']+50))
-    else:
-        kwadraty.append((magazyn_dict[kroki[len(kroki)-2]]['X']+95*(5-liczba), magazyn_dict[kroki[len(kroki)-2]]['Y']))
-        linie.append((magazyn_dict[kroki[len(kroki)-2]]['X']+95*(5-liczba), magazyn_dict[kroki[len(kroki)-2]]['Y']))
-        if int(kroki[len(kroki)-1][5::])%2==0:
-            linie.append((magazyn_dict[kroki[len(kroki)-2]]['X']+95*(5-liczba), magazyn_dict[kroki[len(kroki)-2]]['Y']+50))
-        else:
-            linie.append((magazyn_dict[kroki[len(kroki)-2]]['X']+95*(5-liczba), magazyn_dict[kroki[len(kroki)-2]]['Y']-50))
+if int(kroki[koniec-1][2:4])%2==0 and kroki[koniec-1][5::] not in ['20','00','40']:
+    linie.append((magazyn_dict[kroki[koniec-1]]['X'], magazyn_dict[kroki[koniec-1]]['Y']+50))
+else:
+    linie.append((magazyn_dict[kroki[koniec-1]]['X'], magazyn_dict[kroki[koniec-1]]['Y']-50))
 rysuj_kwadrat(kwadraty)
 rysuj_prosta(linie)
     
