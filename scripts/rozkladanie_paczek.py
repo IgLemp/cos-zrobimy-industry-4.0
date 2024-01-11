@@ -9,8 +9,62 @@ dimensions_list = [[]]
 # Inicjalizacja listy produktów
 products_data = []
 
+def load_dimensions(filename):
+    dimensions = {}
+    with open(filename, newline='', encoding='utf-8') as dimensions_file:
+        dimensions_reader = csv.DictReader(dimensions_file)
+        for row in dimensions_reader:
+            dimensions[row['ID Produktu']] = {
+                'Waga (kg)': row['Waga (kg)'],
+                'Wymiary (mm)': row['Wymiary (mm)']
+            }
+    return dimensions
+
+def main():
+    # Wczytaj wymiary paczek
+    dimensions = load_dimensions('ListaProduktow.csv')
+
+    # Inicjalizuj listę produktów do realizacji
+    lista_do_realizacji = []
+
+    # Wczytaj dane z pliku Zamowienie13.csv
+    with open('Zamowienie13.csv', newline='', encoding='utf-8') as zamowienie_file:
+        zamowienie_reader = csv.DictReader(zamowienie_file)
+        for row in zamowienie_reader:
+            id_produktu = row['ID Produktu']
+            ilosc = int(row['Ilość'])
+
+            # Pobierz dane dotyczące produktu z ListaProduktow.csv
+            produkt_info = dimensions.get(id_produktu)
+
+            if produkt_info:
+                waga = produkt_info['Waga (kg)']
+                wymiary = produkt_info['Wymiary (mm)']
+
+                # Dodaj ilość produktów do listy do realizacji
+                for _ in range(ilosc):
+                    lista_do_realizacji.append({
+                        'ID Produktu': id_produktu,
+                        'Nazwa Produktu': row['Nazwa Produktu'],
+                        'Waga (kg)': waga,
+                        'Wymiary (mm)': wymiary
+                    })
+
+    # Zapisz nowy plik ListaDoRealizacji.csv
+    with open('ListaDoRealizacji.csv', 'w', newline='', encoding='utf-8') as output_file:
+        fieldnames = ['ID Produktu', 'Nazwa Produktu', 'Waga (kg)', 'Wymiary (mm)']
+        output_writer = csv.DictWriter(output_file, fieldnames=fieldnames)
+        output_writer.writeheader()
+        output_writer.writerows(lista_do_realizacji)
+
+    print("Plik 'ListaDoRealizacji.csv' został utworzony.")
+
+if __name__ == "__main__":
+    main()
+
+
 # Nazwa pliku CSV
-csv_file = os.path.join('ListaProduktow.csv')
+csv_file = os.path.join('ListaDoRealizacji.csv')
 
 # Wczytywanie danych z pliku CSV
 with open(csv_file, 'r') as file:
@@ -87,7 +141,7 @@ for product_info in products_data:
         names_list.append([])
         dimensions_list.append([])
 
-        # Dodaj ID, nazwę produktu i wymiary pierwszej paczki do nowej palety
+        # Dodaj ID, nazwę produktu i wymiary pierwszej paczki do nowej palety 
         id_list[-1].append(product_info['ID Produktu'])
         names_list[-1].append(product_info['Nazwa Produktu'])
         dimensions_list[-1].append(product_info['Wymiary (mm)'])
