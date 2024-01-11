@@ -67,7 +67,7 @@ def wychodzenie_z_alejek_bocznych(polorzenie_koncowe, polorzenie_pocznotkowe):
         print("".join(polorzenie_pocznotkowe),1)
         if(int(polorzenie_pocznotkowe[5])>=2 and int(polorzenie_pocznotkowe[5])<4 ):
             if(int(polorzenie_pocznotkowe[3])%2==0):
-                polorzenie_pocznotkowe[3]=str(int(polorzenie_pocznotkowe[3])-1)
+                polorzenie_pocznotkowe[3]=str(int(polorzenie_pocznotkowe[3])+1)
                 zmienne_dane.append("".join(polorzenie_pocznotkowe))
                 print("".join(polorzenie_pocznotkowe),2)
             polorzenie_pocznotkowe[5]=str(0)
